@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="750.0" prefWidth="850.0" styleClass="clientes_contenedor"
+            stylesheets="@../../Styles/clientes.css" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.tpv_2024.Controladores.Cliente.CuentasControlador">
+    <Text layoutX="404.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clientes"
+          AnchorPane.leftAnchor="404.0" AnchorPane.topAnchor="14.0"/>
+    <ListView fx:id="clientes_tabla" layoutX="14.0" layoutY="67.0" prefHeight="640.0" prefWidth="820.0"
+              AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="67.0"/>
+</AnchorPane>

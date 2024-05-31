@@ -1,5 +1,6 @@
 package com.example.tpv_2024.Controladores.Cliente;
 
+import com.example.tpv_2024.Modelos.Modelo;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
@@ -19,5 +20,25 @@ public class ClientMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addListeners();
+    }
+
+    //Funcionalidad a los botones para que cambie la vista central
+    private void addListeners() {
+        home_btn.setOnAction(event -> onHome());
+        clientes_btn.setOnAction(event -> onCuentas());
+        ventas_btn.setOnAction(event -> onVentas());
+    }
+
+    private void onCuentas() {
+        Modelo.getInstance().getViewFactory().getClienteVistaSeleccionada().set("Cuentas");
+    }
+
+    private void onHome() {
+        Modelo.getInstance().getViewFactory().getClienteVistaSeleccionada().set("Home");
+    }
+
+    private void onVentas(){
+        Modelo.getInstance().getViewFactory().getClienteVistaSeleccionada().set("Ventas");
     }
 }

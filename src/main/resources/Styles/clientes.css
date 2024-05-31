@@ -1,0 +1,14 @@
+.clientes_contenedor {
+    -fx-background-color: #EEEEEE;
+}
+
+.clientes_contenedor Text {
+    -fx-fill: #000000;
+    -fx-font-size: 2.5em;
+    -fx-font-family: "Calibri Light";
+}
+
+.clientes_contenedor .list-view {
+    -fx-background-color: #EEEEEE;
+    -fx-pref-width: 800;
+}
