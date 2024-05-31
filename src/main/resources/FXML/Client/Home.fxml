@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="750.0" prefWidth="950.0" styleClass="home" stylesheets="@../../Styles/home.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.tpv_2024.Controladores.Cliente.HomeController">
+    <Text fx:id="bienvenida_txt" layoutX="341.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0"
+          styleClass="user_name" text="¡Bienvenido TIMUR!" wrappingWidth="268.13671875"/>
+</AnchorPane>
