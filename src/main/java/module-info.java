@@ -3,6 +3,9 @@ module com.example.tpv_2024 {
     requires javafx.fxml;
     requires de.jensd.fx.glyphs.fontawesome;
     requires java.sql;
+    requires org.apache.httpcomponents.client5.httpclient5;
+    requires org.apache.httpcomponents.core5.httpcore5;
+    requires com.fasterxml.jackson.databind;
 
 
     opens com.example.tpv_2024 to javafx.fxml;
