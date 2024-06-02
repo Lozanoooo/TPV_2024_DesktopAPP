@@ -6,6 +6,7 @@ import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class ViewFactory {
 
     private AnchorPane homeView;
     private AnchorPane clientesView;
-    private AnchorPane ventasView;
+    private VBox ventasView;
 
     public ViewFactory(){
         this.clienteVistaSeleccionada = new SimpleStringProperty("");
@@ -54,10 +55,13 @@ public class ViewFactory {
         return clientesView;
     }
 
-    public AnchorPane getVentasView() {
+    public VBox getVentasView() {
         if (ventasView == null) {
             try {
                 ventasView = new FXMLLoader(getClass().getResource("/FXML/Client/ventas.fxml")).load();
+                // a ventana completa
+                ventasView.setPrefWidth(1920);
+                ventasView.setPrefHeight(1080);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -74,7 +78,7 @@ public class ViewFactory {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Client/Client.fxml"));
         ClientControlador clientControlador = new ClientControlador();
         loader.setController(clientControlador);
-        createStage(loader);
+        createStage2(loader);
     }
 
     private void createStage(FXMLLoader loader) {
@@ -87,6 +91,20 @@ public class ViewFactory {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("TPV");
+        stage.show();
+    }
+
+    private void createStage2(FXMLLoader loader) {
+        Scene scene=null;
+        try {
+            scene = new Scene(loader.load());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("TPV");
+        stage.setFullScreen(true);
         stage.show();
     }
 
