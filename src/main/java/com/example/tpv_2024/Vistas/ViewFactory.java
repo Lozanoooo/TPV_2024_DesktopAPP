@@ -1,6 +1,8 @@
 package com.example.tpv_2024.Vistas;
 
-import com.example.tpv_2024.Controladores.Cliente.ClienteControlador;
+import com.example.tpv_2024.Controladores.Cliente.ClientControlador;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -10,9 +12,25 @@ import java.io.IOException;
 
 public class ViewFactory {
     // Vistas
-    private AnchorPane homeView;
+    //Cada vez que se cambia el valor de abajo el listener de ClientControlador va ponerse en función
+    private final StringProperty clienteVistaSeleccionada;
 
-    public ViewFactory(){}
+    private AnchorPane homeView;
+    private AnchorPane clientesView;
+    private AnchorPane ventasView;
+
+    public ViewFactory(){
+        this.clienteVistaSeleccionada = new SimpleStringProperty("");
+    }
+
+    /*
+    * Vistas del Administrador
+    * */
+
+    //Una vez los objetos de vistas se hayan creado no se tienen que crear más por eso vista seleccionada:
+    public StringProperty getClienteVistaSeleccionada() {
+        return clienteVistaSeleccionada;
+    }
 
     public AnchorPane getHomeView() {
         if (homeView == null) {
@@ -25,6 +43,28 @@ public class ViewFactory {
         return homeView;
     }
 
+    public AnchorPane getClientesView(){
+        if(clientesView == null) {
+            try {
+                clientesView = new FXMLLoader(getClass().getResource("/FXML/Client/Cuentas.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return clientesView;
+    }
+
+    public AnchorPane getVentasView() {
+        if (ventasView == null) {
+            try {
+                ventasView = new FXMLLoader(getClass().getResource("/FXML/Client/ventas.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return ventasView;
+    }
+
     public void showLoginWindow(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Login.fxml"));
         createStage(loader);
@@ -32,8 +72,8 @@ public class ViewFactory {
 
     public void showClientWindow(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Client/Client.fxml"));
-        ClienteControlador clienteControlador = new ClienteControlador();
-        loader.setController(clienteControlador);
+        ClientControlador clientControlador = new ClientControlador();
+        loader.setController(clientControlador);
         createStage(loader);
     }
 
