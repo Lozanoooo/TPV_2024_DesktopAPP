@@ -18,9 +18,9 @@ public class ClientControlador implements Initializable{
                 //Metodo para cambiar las vistas del centro cambiandose el valor de StringProperty (Que se va cambiar desde el CleinteMenuCOntrolador)
                 case "Cuentas" -> padre.setCenter(Modelo.getInstance().getViewFactory().getClientesView());
                 case "Ventas" -> padre.setCenter(Modelo.getInstance().getViewFactory().getVentasView());
-                case "Home" -> padre.setCenter(Modelo.getInstance().getViewFactory().getHomeView());
                 case "Empleados" -> padre.setCenter(Modelo.getInstance().getViewFactory().getEmpleadosView());
                 case "Productos" -> padre.setCenter(Modelo.getInstance().getViewFactory().getProductosView());
+                case "Home" -> padre.setCenter(Modelo.getInstance().getViewFactory().getHomeView());
                 default -> padre.setCenter(Modelo.getInstance().getViewFactory().getHomeView());
             }
         });

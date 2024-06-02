@@ -81,7 +81,7 @@ public class ViewFactory {
     public AnchorPane getProductosView() {
         if (productosView == null) {
             try {
-                productosView = new FXMLLoader(getClass().getResource("/FXML/Client/Productos.fxml")).load();
+                productosView = new FXMLLoader(getClass().getResource("/FXML/Client/prdcts.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
