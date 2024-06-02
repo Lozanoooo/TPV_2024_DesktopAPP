@@ -26,11 +26,13 @@ public class ClientMenuController implements Initializable {
     //Funcionalidad a los botones para que cambie la vista central
     private void addListeners() {
         home_btn.setOnAction(event -> onHome());
-        clientes_btn.setOnAction(event -> onCuentas());
+        clientes_btn.setOnAction(event -> onClientes());
         ventas_btn.setOnAction(event -> onVentas());
+        empleados_btn.setOnAction(event -> onEmpleados());
+        productos_btn.setOnAction(event -> onProductos());
     }
 
-    private void onCuentas() {
+    private void onClientes() {
         Modelo.getInstance().getViewFactory().getClienteVistaSeleccionada().set("Cuentas");
     }
 
@@ -40,5 +42,13 @@ public class ClientMenuController implements Initializable {
 
     private void onVentas(){
         Modelo.getInstance().getViewFactory().getClienteVistaSeleccionada().set("Ventas");
+    }
+
+    private void onEmpleados(){
+        Modelo.getInstance().getViewFactory().getClienteVistaSeleccionada().set("Empleados");
+    }
+
+    private void onProductos(){
+        Modelo.getInstance().getViewFactory().getClienteVistaSeleccionada().set("Productos");
     }
 }

@@ -18,6 +18,8 @@ public class ViewFactory {
     private AnchorPane homeView;
     private AnchorPane clientesView;
     private AnchorPane ventasView;
+    private AnchorPane empleadosView;
+    private AnchorPane productosView;
 
     public ViewFactory(){
         this.clienteVistaSeleccionada = new SimpleStringProperty("");
@@ -63,6 +65,28 @@ public class ViewFactory {
             }
         }
         return ventasView;
+    }
+
+    public AnchorPane getEmpleadosView() {
+        if (empleadosView == null) {
+            try {
+                empleadosView = new FXMLLoader(getClass().getResource("/FXML/Client/Empleados.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return empleadosView;
+    }
+
+    public AnchorPane getProductosView() {
+        if (productosView == null) {
+            try {
+                productosView = new FXMLLoader(getClass().getResource("/FXML/Client/Productos.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return productosView;
     }
 
     public void showLoginWindow(){
