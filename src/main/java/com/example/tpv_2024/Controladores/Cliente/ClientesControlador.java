@@ -6,7 +6,7 @@ import javafx.scene.control.ListView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CuentasControlador implements Initializable {
+public class ClientesControlador implements Initializable {
     public ListView clientes_tabla;
 
     @Override
