@@ -17,11 +17,11 @@ public class ViewFactory {
     private final StringProperty clienteVistaSeleccionada;
 
     private AnchorPane homeView;
-    private AnchorPane clientesView;
+    private VBox clientesView;
 
     private VBox ventasView;
-    private AnchorPane empleadosView;
-    private AnchorPane productosView;
+    private VBox empleadosView;
+    private VBox productosView;
 
 
     public ViewFactory(){
@@ -48,7 +48,7 @@ public class ViewFactory {
         return homeView;
     }
 
-    public AnchorPane getClientesView(){
+    public VBox getClientesView(){
         if(clientesView == null) {
             try {
                 clientesView = new FXMLLoader(getClass().getResource("/FXML/Client/Cuentas.fxml")).load();
@@ -73,7 +73,7 @@ public class ViewFactory {
         return ventasView;
     }
 
-    public AnchorPane getEmpleadosView() {
+    public VBox getEmpleadosView() {
         if (empleadosView == null) {
             try {
                 empleadosView = new FXMLLoader(getClass().getResource("/FXML/Client/Empleados.fxml")).load();
@@ -84,7 +84,7 @@ public class ViewFactory {
         return empleadosView;
     }
 
-    public AnchorPane getProductosView() {
+    public VBox getProductosView() {
         if (productosView == null) {
             try {
                 productosView = new FXMLLoader(getClass().getResource("/FXML/Client/prdcts.fxml")).load();

@@ -7,6 +7,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -29,7 +31,18 @@ public class LoginControlador implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         login_btn.setOnAction(e -> onLogin());
+
+        // Añadir el evento de teclado para los campos de texto
+        usuario_fld.setOnKeyPressed(this::handleKeyPressed);
+        pwd_fld.setOnKeyPressed(this::handleKeyPressed);
+    }
+
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            onLogin();
+        }
     }
 
     private void onLogin(){
@@ -74,10 +87,6 @@ public class LoginControlador implements Initializable {
         alert.showAndWait();
     }
 
-    // Pestaña con el contacto del soporte
-    public void soporte() {
-        showAlert(Alert.AlertType.INFORMATION, "Soporte", "Contacte con el soporte técnico por email: dichaowang107@gmail.com");
-    }
 
     public static String hashPassword(String password) {
         try {

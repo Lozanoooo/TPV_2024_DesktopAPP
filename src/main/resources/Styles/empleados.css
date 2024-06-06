@@ -29,7 +29,7 @@
 
 /* Header */
 .header_container {
-    -fx-background-color: linear-gradient(to right, #00008B, #87CEEB);
+    -fx-background-color: linear-gradient(to right, #4c8b00, #91eb87);
     -fx-alignment: center_left;
     -fx-padding: 10;
 }
