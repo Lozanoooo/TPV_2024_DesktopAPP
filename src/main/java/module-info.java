@@ -7,8 +7,9 @@ module com.example.tpv_2024 {
     requires org.apache.httpcomponents.core5.httpcore5;
     requires com.fasterxml.jackson.databind;
 
-
     opens com.example.tpv_2024 to javafx.fxml;
+    opens com.example.tpv_2024.Controladores.Cliente to javafx.fxml;
+
     exports com.example.tpv_2024;
     exports com.example.tpv_2024.Controladores;
     exports com.example.tpv_2024.Controladores.Cliente;

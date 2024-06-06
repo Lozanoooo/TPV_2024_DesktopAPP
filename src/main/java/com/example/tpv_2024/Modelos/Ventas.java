@@ -16,6 +16,10 @@ public class Ventas {
         this.total = total;
     }
 
+    public Ventas() {
+
+    }
+
     public String getNombre() {
         return nombre;
     }

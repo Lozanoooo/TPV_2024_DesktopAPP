@@ -93,25 +93,25 @@
                </Text>
                <Pane prefHeight="100.0" prefWidth="162.0">
                   <children>
-                     <RadioButton layoutY="59.0" mnemonicParsing="false" text="VISA">
+                     <RadioButton fx:id="rbt_visa" layoutY="59.0" mnemonicParsing="false" text="VISA">
                         <font>
                            <Font size="18.0" />
                         </font>
                      </RadioButton>
-                     <RadioButton layoutY="21.0" mnemonicParsing="false" text="EFECTIVO">
+                     <RadioButton fx:id="rbt_efectivo" layoutY="21.0" mnemonicParsing="false" text="EFECTIVO">
                         <font>
                            <Font size="18.0" />
                         </font>
                      </RadioButton>
                   </children>
                </Pane>
-               <TextField promptText="En efectivo" />
+               <TextField fx:id="tf_EnEfectivo" promptText="En efectivo" />
                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cambios: ">
                   <font>
                      <Font size="24.0" />
                   </font>
                </Text>
-               <Label text="€ 0.00" textFill="#4caf50">
+               <Label fx:id="l_cambios" text="€ 0.00" textFill="#4caf50">
                   <font>
                      <Font name="System Bold" size="24.0" />
                   </font>
