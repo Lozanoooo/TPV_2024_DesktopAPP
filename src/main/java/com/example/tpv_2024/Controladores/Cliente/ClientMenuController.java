@@ -51,4 +51,9 @@ public class ClientMenuController implements Initializable {
     private void onProductos(){
         Modelo.getInstance().getViewFactory().getClienteVistaSeleccionada().set("Productos");
     }
+
+    //Funcionalidad al botón de cerrar sesión
+    public void onLogout() {
+
+    }
 }

@@ -10,6 +10,7 @@
 
 
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.geometry.Insets?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../Styles/login.css" xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tpv_2024.Controladores.LoginControlador">
    <VBox layoutY="4.0" prefHeight="400.0" prefWidth="200.0" styleClass="login_logo_container"
@@ -19,11 +20,17 @@
    </VBox>
    <VBox layoutX="279.0" layoutY="100.0" prefHeight="350.0" prefWidth="350.0" styleClass="login_form_container"
          AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-      <Label fx:id="usuario_lbl" text="Usuario"/>
+      <Label fx:id="usuario_lbl" text="Usuario">
+      <VBox.margin>
+         <Insets top="50.0" />
+      </VBox.margin></Label>
       <TextField fx:id="usuario_fld" styleClass="input_field"/>
       <Label fx:id="pwd_lbl" text="Contraseña"/>
       <PasswordField fx:id="pwd_fld" styleClass="input_field"/>
-      <Button fx:id="login_btn" mnemonicParsing="false" text="Iniciar Sesión"/>
+      <Button fx:id="login_btn" mnemonicParsing="false" text="Iniciar Sesión">
+      <VBox.margin>
+         <Insets top="30.0" />
+      </VBox.margin></Button>
       <Label fx:id="error_lbl" styleClass="error_lbl"/>
    </VBox>
 </AnchorPane>
