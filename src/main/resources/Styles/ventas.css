@@ -8,7 +8,7 @@
 
 /* Header */
 .header_container {
-    -fx-background-color: linear-gradient(to right, #6bcc10, #b5e046);
+    -fx-background-color: linear-gradient(to right, #4f4e4e, #8d8d8d);
     -fx-alignment: center_left;
     -fx-padding: 10;
 }
@@ -75,18 +75,16 @@
 
 /* Buttons */
 .buttons_container {
-    -fx-alignment: top_center;
+    -fx-alignment: top-center; /* Ensure buttons are centered */
     -fx-spacing: 20;
     -fx-padding: 10;
 }
 
 .ventas_button_add {
-    -fx-pref-width: 100px;
-    -fx-pref-height: 40px;
     -fx-background-color: linear-gradient(to right, #3a943a, #458145);
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 1.1em;
-    -fx-background-radius: 5;
+    -fx-background-radius: 10;
     -fx-font-family: "Calibri Light";
     -fx-effect: dropshadow(three-pass-box, #AAAAAA, 3, 0, 0, 3);
 }
@@ -97,12 +95,10 @@
 }
 
 .ventas_button_elim {
-    -fx-pref-width: 100px;
-    -fx-pref-height: 40px;
     -fx-background-color: linear-gradient(to right, #c24055, #a11111);
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 1.1em;
-    -fx-background-radius: 5;
+    -fx-background-radius: 10;
     -fx-font-family: "Calibri Light";
     -fx-effect: dropshadow(three-pass-box, #AAAAAA, 3, 0, 0, 3);
 }
@@ -112,7 +108,20 @@
     -fx-background-color: #af4c4c;
 }
 
+.ventas_button_borrar {
+    -fx-background-color: linear-gradient(to right, rgba(255, 214, 80, 0.87), #f6cb48);
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 1.1em;
+    -fx-background-radius: 10;
+    -fx-font-family: "Calibri Light";
+    -fx-effect: dropshadow(three-pass-box, #AAAAAA, 3, 0, 0, 3);
+}
+
+.ventas_button_borrar:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #f5b904;
+}
+
 .error_lbl {
     -fx-text-fill: #FF0000;
 }
-

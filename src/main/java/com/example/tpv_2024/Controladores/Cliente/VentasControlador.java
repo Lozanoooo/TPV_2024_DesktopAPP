@@ -1,6 +1,6 @@
 package com.example.tpv_2024.Controladores.Cliente;
 
-import com.example.tpv_2024.Modelos.Productos;
+import com.example.tpv_2024.Modelos.Ventas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,17 +17,17 @@ import java.util.ResourceBundle;
 
 public class VentasControlador implements Initializable {
     @FXML
-    public TableView<Productos> productTable;
+    public TableView<Ventas> productTable;
     @FXML
-    public TableColumn<Productos, String> barcodeColumn;
+    public TableColumn<Ventas, String> barcodeColumn;
     @FXML
-    public TableColumn<Productos, Integer> quantityColumn;
+    public TableColumn<Ventas, Integer> quantityColumn;
     @FXML
-    public TableColumn<Productos, Double> productPriceColumn;
+    public TableColumn<Ventas, Double> productPriceColumn;
     @FXML
-    public TableColumn<Productos, String> productNameColumn;
+    public TableColumn<Ventas, String> productNameColumn;
     @FXML
-    public TableColumn<Productos, Double> totalColumn;
+    public TableColumn<Ventas, Double> totalColumn;
     @FXML
     public Label totalQuantityLabel;
     @FXML
@@ -45,7 +45,7 @@ public class VentasControlador implements Initializable {
     @FXML
     public Button pagar_btn;
 
-    public ObservableList<Productos> productos;
+    public ObservableList<Ventas> productos;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,18 +66,57 @@ public class VentasControlador implements Initializable {
 
     @FXML
     public void onAgregar(ActionEvent event) {
-        System.out.println("Agregando producto");
-        String nombre = this.TF_Nombre.getText();
-        String codigo = this.TF_Cod_Barra.getText();
-        double precio = Double.parseDouble(this.TF_Precio.getText());
-        int cantidad = Integer.parseInt(this.TF_Cantidad.getText());
-        double total = precio * cantidad;
-        Productos producto = new Productos(nombre, codigo, precio, cantidad, total);
-        productos.add(producto);
-        this.productTable.setItems(productos);
-        this.TF_Nombre.clear();
-        this.TF_Cod_Barra.clear();
-        this.TF_Precio.clear();
-        this.TF_Cantidad.clear();
+        try {
+            System.out.println("Agregando producto");
+            String nombre = this.TF_Nombre.getText();
+            String codigo = this.TF_Cod_Barra.getText();
+            double precio = Double.parseDouble(this.TF_Precio.getText());
+            int cantidad = Integer.parseInt(this.TF_Cantidad.getText());
+            double total = precio * cantidad;
+            Ventas producto = new Ventas(nombre, codigo, precio, cantidad, total);
+            productos.add(producto);
+            this.productTable.setItems(productos);
+            this.TF_Nombre.clear();
+            this.TF_Cod_Barra.clear();
+            this.TF_Precio.clear();
+            this.TF_Cantidad.clear();
+            updateTotal();
+            updateCantidad();
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al agregar producto");
+            alert.setContentText("Por favor, ingrese los datos correctamente");
+            alert.showAndWait();
+        }
+    }
+
+    public void onPagar(ActionEvent event) {
+        System.out.println("Pagando");
+
+    }
+
+    public void updateTotal() {
+        double total = 0;
+        for (Ventas producto : productos) {
+            total += producto.getTotal();
+        }
+        this.totalLabel.setText(String.format("€ %.2f",total));
+    }
+
+    public  void updateCantidad(){
+        int cantidad = 0;
+        for (Ventas producto : productos) {
+            cantidad += producto.getCantidad();
+        }
+        this.totalQuantityLabel.setText(String.valueOf(cantidad));
+    }
+
+    private double calculateTotal() {
+        double total = 0;
+        for (Ventas producto : productos) {
+            total += producto.getTotal();
+        }
+        return total;
     }
 }

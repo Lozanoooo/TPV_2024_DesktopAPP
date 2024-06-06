@@ -1,6 +1,6 @@
 package com.example.tpv_2024.Modelos;
 
-public class Productos {
+public class Ventas {
 
     private String nombre;
     private String codigo;
@@ -8,7 +8,7 @@ public class Productos {
     private int cantidad;
     private double total;
 
-    public Productos(String nombre, String codigo, double precio, int cantidad, double total) {
+    public Ventas(String nombre, String codigo, double precio, int cantidad, double total) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.precio = precio;
