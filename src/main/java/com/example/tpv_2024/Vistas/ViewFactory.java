@@ -21,7 +21,7 @@ public class ViewFactory {
 
     private VBox ventasView;
     private AnchorPane empleadosView;
-    private AnchorPane productosView;
+    private VBox productosView;
 
 
     public ViewFactory(){
@@ -84,7 +84,7 @@ public class ViewFactory {
         return empleadosView;
     }
 
-    public AnchorPane getProductosView() {
+    public VBox getProductosView() {
         if (productosView == null) {
             try {
                 productosView = new FXMLLoader(getClass().getResource("/FXML/Client/prdcts.fxml")).load();
