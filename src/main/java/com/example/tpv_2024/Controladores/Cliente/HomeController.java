@@ -22,7 +22,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //todo: Cambiar el nombre del empleado por el nombre del empleado logueado
+        //todo: Cambiar el nombre por el nombre del empleado logueado
 
         String nombre = SessionManager.getInstance().getNombreEmpleadoLogueado();
         if(nombre != null){

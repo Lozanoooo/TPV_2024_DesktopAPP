@@ -70,15 +70,17 @@ public class LoginControlador implements Initializable {
 
                 // Lógica para iniciar sesión exitosa
                 System.out.println("Usuario y contraseña correctos");
+
+                // Obtener el objeto Empleado desde el servicio
+                System.out.println("Obteniendo empleado desde el servicio");
+                Empleado empleado = empleadoService.getEmpleadoPorId(usuario_fld.getText());
+                SessionManager.getInstance().setEmpleadoLogueado(empleado);
+
+                // primero pasar el nombre y ahora muestra
                 Stage stage = (Stage) error_lbl.getScene().getWindow();
                 Modelo.getInstance().getViewFactory().CloseStage(stage);
                 Modelo.getInstance().getViewFactory().showClientWindow();
 
-                // Obtener el objeto Empleado desde el servicio
-
-                System.out.println("Obteniendo empleado desde el servicio");
-                Empleado empleado = empleadoService.getEmpleadoPorId(usuario_fld.getText());
-                SessionManager.getInstance().setEmpleadoLogueado(empleado);
 
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error al iniciar sesión", "Usuario y/o contraseña incorrectos");
