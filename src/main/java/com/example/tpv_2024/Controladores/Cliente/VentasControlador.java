@@ -142,8 +142,6 @@ public class VentasControlador implements Initializable {
         }
     }
 
-
-
     @FXML
     public void onAgregar(ActionEvent event) {
         try {
@@ -153,9 +151,22 @@ public class VentasControlador implements Initializable {
             double precio = Double.parseDouble(this.TF_Precio.getText());
             int cantidad = Integer.parseInt(this.TF_Cantidad.getText());
             double total = precio * cantidad;
-            Ventas producto = new Ventas(nombre, codigo, precio, cantidad, total);
-            productos.add(producto);
-            this.productTable.setItems(productos);
+
+            // Verificar si ya existe un producto con el mismo código de barra en la tabla
+            Ventas productoExistente = buscarProductoEnTabla(codigo);
+            if (productoExistente != null) {
+                // Si existe, aumentar la cantidad y actualizar el total
+                int nuevaCantidad = productoExistente.getCantidad() + cantidad;
+                productoExistente.setCantidad(nuevaCantidad);
+                double nuevoTotal = productoExistente.getPrecio() * nuevaCantidad;
+                productoExistente.setTotal(nuevoTotal);
+                productTable.refresh(); // Actualizar la tabla
+            } else {
+                // Si no existe, crear un nuevo producto y agregarlo a la tabla
+                Ventas producto = new Ventas(nombre, codigo, precio, cantidad, total);
+                productos.add(producto);
+            }
+
             this.TF_Nombre.clear();
             this.TF_Cod_Barra.clear();
             this.TF_Precio.clear();
@@ -236,4 +247,13 @@ public class VentasControlador implements Initializable {
         });
 
     }
+    private Ventas buscarProductoEnTabla(String codigo) {
+        for (Ventas producto : productTable.getItems()) {
+            if (producto.getCodigo().equals(codigo)) {
+                return producto;
+            }
+        }
+        return null;
+    }
+
 }
