@@ -15,6 +15,9 @@ public class Empleado {
         this.contrasena = contrasena;
     }
 
+    public Empleado() {
+    }
+
     public int getIdEmpleado() {
         return idEmpleado;
     }

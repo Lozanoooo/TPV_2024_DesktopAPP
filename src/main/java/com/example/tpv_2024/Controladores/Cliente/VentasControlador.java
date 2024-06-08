@@ -101,6 +101,30 @@ public class VentasControlador implements Initializable {
 
         // Añadir listener para el campo del código de barra
         TF_Cod_Barra.setOnAction(event -> comprobarProducto(TF_Cod_Barra.getText()));
+
+        // Agregar listener para la columna de cantidad
+        quantityColumn.setOnEditCommit(event -> {
+            Ventas producto = event.getRowValue();
+            int nuevaCantidad = event.getNewValue();
+            producto.setCantidad(nuevaCantidad);
+            double nuevoTotal = producto.getPrecio() * nuevaCantidad;
+            producto.setTotal(nuevoTotal);
+            productTable.refresh(); // Actualizar la tabla
+            updateTotal();
+            updateCantidad();
+        });
+
+// Agregar listener para la columna de precio
+        productPriceColumn.setOnEditCommit(event -> {
+            Ventas producto = event.getRowValue();
+            double nuevoPrecio = event.getNewValue();
+            producto.setPrecio(nuevoPrecio);
+            double nuevoTotal = nuevoPrecio * producto.getCantidad();
+            producto.setTotal(nuevoTotal);
+            productTable.refresh(); // Actualizar la tabla
+            updateTotal();
+        });
+
     }
 
     private void calcularCambios(ActionEvent actionEvent) {
@@ -118,8 +142,6 @@ public class VentasControlador implements Initializable {
         }
     }
 
-
-
     @FXML
     public void onAgregar(ActionEvent event) {
         try {
@@ -129,15 +151,29 @@ public class VentasControlador implements Initializable {
             double precio = Double.parseDouble(this.TF_Precio.getText());
             int cantidad = Integer.parseInt(this.TF_Cantidad.getText());
             double total = precio * cantidad;
-            Ventas producto = new Ventas(nombre, codigo, precio, cantidad, total);
-            productos.add(producto);
-            this.productTable.setItems(productos);
+
+            // Verificar si ya existe un producto con el mismo código de barra en la tabla
+            Ventas productoExistente = buscarProductoEnTabla(codigo);
+            if (productoExistente != null) {
+                // Si existe, aumentar la cantidad y actualizar el total
+                int nuevaCantidad = productoExistente.getCantidad() + cantidad;
+                productoExistente.setCantidad(nuevaCantidad);
+                double nuevoTotal = productoExistente.getPrecio() * nuevaCantidad;
+                productoExistente.setTotal(nuevoTotal);
+                productTable.refresh(); // Actualizar la tabla
+            } else {
+                // Si no existe, crear un nuevo producto y agregarlo a la tabla
+                Ventas producto = new Ventas(nombre, codigo, precio, cantidad, total);
+                productos.add(producto);
+            }
+
             this.TF_Nombre.clear();
             this.TF_Cod_Barra.clear();
             this.TF_Precio.clear();
             this.TF_Cantidad.clear();
             updateTotal();
             updateCantidad();
+            System.out.println("Producto agregado");
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -145,6 +181,12 @@ public class VentasControlador implements Initializable {
             alert.setContentText("Por favor, ingrese los datos correctamente");
             alert.showAndWait();
         }
+    }
+    public void onBorrar(ActionEvent event) {
+        Ventas producto = productTable.getSelectionModel().getSelectedItem();
+        productos.remove(producto);
+        updateTotal();
+        updateCantidad();
     }
 
     public void onPagar(ActionEvent event) {
@@ -187,6 +229,9 @@ public class VentasControlador implements Initializable {
                     TF_Precio.setText(String.valueOf(producto.getPrecio()));
                     TF_Cantidad.setText(String.valueOf(producto.getCantidad()));
                     TF_Cantidad.setText("1");
+
+                    // Agregar el producto a la lista de productos simulando un click en el botón de agregar
+                    agregar_btn.fire();
                 });
             } catch (Exception e) {
                 // Manejar cualquier excepción
@@ -200,5 +245,15 @@ public class VentasControlador implements Initializable {
                 e.printStackTrace();
             }
         });
+
     }
+    private Ventas buscarProductoEnTabla(String codigo) {
+        for (Ventas producto : productTable.getItems()) {
+            if (producto.getCodigo().equals(codigo)) {
+                return producto;
+            }
+        }
+        return null;
+    }
+
 }
