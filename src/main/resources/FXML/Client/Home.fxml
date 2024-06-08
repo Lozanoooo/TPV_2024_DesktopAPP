@@ -12,7 +12,7 @@
     <children>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="  ¡ Bienvenido, USUARIO !" textOrigin="CENTER" wrappingWidth="1490.209228515625">
+            <Text fx:id="txt_bienvenida" strokeType="OUTSIDE" strokeWidth="0.0" text="  ¡ Bienvenido, USUARIO !" textOrigin="CENTER" wrappingWidth="1490.209228515625">
                <font>
                   <Font size="64.0" />
                </font>
