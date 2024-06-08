@@ -1,5 +1,6 @@
 package com.example.tpv_2024.Controladores.Cliente;
 
+import com.example.tpv_2024.Modelos.Localizacion;
 import com.example.tpv_2024.Modelos.Producto;
 import com.example.tpv_2024.Servicio.RestClientService;
 import javafx.collections.FXCollections;
@@ -33,8 +34,6 @@ public class ProductosControlador implements Initializable {
     @FXML
     private TableColumn<Producto, Integer> stockColumn;
     @FXML
-    private TableColumn<Producto, String> idLocalizacionColumn;
-    @FXML
     private TableColumn<Producto, Double> precioSuministradorColumn;
     @FXML
     private TableColumn<Producto, String> suministradorColumn;
@@ -42,6 +41,16 @@ public class ProductosControlador implements Initializable {
     private TableColumn<Producto, Double> gananciaColumn;
     @FXML
     private TableColumn<Producto, String> fechaStockColumn;
+    @FXML
+    private TableColumn<Producto, String> idLocalizacionColumn;
+    @FXML
+    private TableColumn<Producto, String> pasilloTiendaColumn;
+    @FXML
+    private TableColumn<Producto, String> estanteriaTiendaColumn;
+    @FXML
+    private TableColumn<Producto, String> pasilloAlmacenColumn;
+    @FXML
+    private TableColumn<Producto, String> estanteriaAlmacenColumn;
 
     @FXML
     private TextField codigoBarraField;
@@ -54,8 +63,6 @@ public class ProductosControlador implements Initializable {
     @FXML
     private TextField stockField;
     @FXML
-    private TextField idLocalizacionField;
-    @FXML
     private TextField precioSuministradorField;
     @FXML
     private TextField suministradorField;
@@ -63,6 +70,16 @@ public class ProductosControlador implements Initializable {
     private TextField gananciaField;
     @FXML
     private TextField fechaStockField;
+    @FXML
+    private TextField idLocalizacionField;
+    @FXML
+    private TextField pasilloTiendaField;
+    @FXML
+    private TextField estanteriaTiendaField;
+    @FXML
+    private TextField pasilloAlmacenField;
+    @FXML
+    private TextField estanteriaAlmacenField;
 
     @FXML
     private Button addButton;
@@ -80,11 +97,15 @@ public class ProductosControlador implements Initializable {
         precioVentaColumn.setCellValueFactory(new PropertyValueFactory<>("precioVenta"));
         categoriaColumn.setCellValueFactory(new PropertyValueFactory<>("categoria"));
         stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        idLocalizacionColumn.setCellValueFactory(new PropertyValueFactory<>("idLocalizacion"));
         precioSuministradorColumn.setCellValueFactory(new PropertyValueFactory<>("precioSuministrador"));
         suministradorColumn.setCellValueFactory(new PropertyValueFactory<>("suministrador"));
         gananciaColumn.setCellValueFactory(new PropertyValueFactory<>("ganancia"));
         fechaStockColumn.setCellValueFactory(new PropertyValueFactory<>("fechaStock"));
+        idLocalizacionColumn.setCellValueFactory(new PropertyValueFactory<>("localizacion.idLocalizacion"));
+        pasilloTiendaColumn.setCellValueFactory(new PropertyValueFactory<>("localizacion.pasilloTienda"));
+        estanteriaTiendaColumn.setCellValueFactory(new PropertyValueFactory<>("localizacion.estanteriaTienda"));
+        pasilloAlmacenColumn.setCellValueFactory(new PropertyValueFactory<>("localizacion.pasilloAlmacen"));
+        estanteriaAlmacenColumn.setCellValueFactory(new PropertyValueFactory<>("localizacion.estanteriaAlmacen"));
 
         productosTable.setItems(productos);
 
@@ -95,7 +116,6 @@ public class ProductosControlador implements Initializable {
         precioVentaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         categoriaColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         stockColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        idLocalizacionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         precioSuministradorColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         suministradorColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         gananciaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
@@ -122,19 +142,29 @@ public class ProductosControlador implements Initializable {
         try {
             String codigoBarra = codigoBarraField.getText();
             String nombre = nombreField.getText();
-            double precioVenta = Double.parseDouble(precioVentaField.getText());
+            Double precioVenta = parseDouble(precioVentaField.getText());
             String categoria = categoriaField.getText();
-            int stock = Integer.parseInt(stockField.getText());
-            String idLocalizacion = idLocalizacionField.getText();
-            double precioSuministrador = Double.parseDouble(precioSuministradorField.getText());
+            Integer stock = parseInt(stockField.getText());
+            Double precioSuministrador = parseDouble(precioSuministradorField.getText());
             String suministrador = suministradorField.getText();
-            double ganancia = Double.parseDouble(gananciaField.getText());
+            Double ganancia = parseDouble(gananciaField.getText());
             String fechaStock = fechaStockField.getText();
+            Integer idLocalizacion = parseInt(idLocalizacionField.getText());
+            String pasilloTienda = pasilloTiendaField.getText();
+            String estanteriaTienda = estanteriaTiendaField.getText();
+            String pasilloAlmacen = pasilloAlmacenField.getText();
+            String estanteriaAlmacen = estanteriaAlmacenField.getText();
 
-            Producto producto = new Producto(codigoBarra, nombre, precioVenta, categoria, stock, idLocalizacion, precioSuministrador, suministrador, ganancia, fechaStock);
-            productos.add(producto);
+            Localizacion localizacion = new Localizacion(idLocalizacion, pasilloTienda, estanteriaTienda, pasilloAlmacen, estanteriaAlmacen);
+            Producto producto = new Producto(codigoBarra, nombre, precioVenta, categoria, stock, precioSuministrador, suministrador, ganancia, fechaStock, localizacion);
+
+            // Añadir el producto a la base de datos
+            Producto nuevoProducto = RestClientService.createProducto(producto);
+
+            // Añadir el nuevo producto a la tabla
+            productos.add(nuevoProducto);
             clearFields();
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             showAlert("Error al agregar producto", "Por favor, ingrese los datos correctamente");
         }
     }
@@ -143,11 +173,24 @@ public class ProductosControlador implements Initializable {
     private void onDelete(ActionEvent event) {
         Producto selectedProduct = productosTable.getSelectionModel().getSelectedItem();
         if (selectedProduct != null) {
-            productos.remove(selectedProduct);
+            try {
+                System.out.println("Eliminando producto con código de barra: " + selectedProduct.getCodigoBarra());
+                boolean success = RestClientService.deleteProducto(selectedProduct.getCodigoBarra());
+                if (success) {
+                    productos.remove(selectedProduct);
+                    System.out.println("Producto eliminado correctamente");
+                } else {
+                    showAlert("Error al eliminar producto", "No se pudo eliminar el producto del servidor");
+                }
+            } catch (IOException | ParseException e) {
+                showAlert("Error al eliminar producto", "Ocurrió un error al intentar eliminar el producto");
+                e.printStackTrace();
+            }
         } else {
             showAlert("Error al eliminar producto", "Por favor, seleccione un producto para eliminar");
         }
     }
+
 
     private void clearFields() {
         codigoBarraField.clear();
@@ -155,11 +198,15 @@ public class ProductosControlador implements Initializable {
         precioVentaField.clear();
         categoriaField.clear();
         stockField.clear();
-        idLocalizacionField.clear();
         precioSuministradorField.clear();
         suministradorField.clear();
         gananciaField.clear();
         fechaStockField.clear();
+        idLocalizacionField.clear();
+        pasilloTiendaField.clear();
+        estanteriaTiendaField.clear();
+        pasilloAlmacenField.clear();
+        estanteriaAlmacenField.clear();
     }
 
     private void showAlert(String title, String content) {
@@ -167,5 +214,21 @@ public class ProductosControlador implements Initializable {
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    private Double parseDouble(String text) {
+        try {
+            return text == null || text.isEmpty() ? null : Double.parseDouble(text);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    private Integer parseInt(String text) {
+        try {
+            return text == null || text.isEmpty() ? null : Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }

@@ -6,23 +6,27 @@ public class Producto {
     private double precioVenta;
     private String categoria;
     private int stock;
-    private String idLocalizacion;
     private double precioSuministrador;
     private String suministrador;
     private double ganancia;
     private String fechaStock;
+    private Localizacion localizacion;
 
-    public Producto(String codigoBarra, String nombre, double precioVenta, String categoria, int stock, String idLocalizacion, double precioSuministrador, String suministrador, double ganancia, String fechaStock) {
+    public Producto() {
+        // Constructor por defecto
+    }
+
+    public Producto(String codigoBarra, String nombre, Double precioVenta, String categoria, Integer stock, Double precioSuministrador, String suministrador, Double ganancia, String fechaStock, Localizacion localizacion) {
         this.codigoBarra = codigoBarra;
         this.nombre = nombre;
         this.precioVenta = precioVenta;
         this.categoria = categoria;
         this.stock = stock;
-        this.idLocalizacion = idLocalizacion;
         this.precioSuministrador = precioSuministrador;
         this.suministrador = suministrador;
         this.ganancia = ganancia;
         this.fechaStock = fechaStock;
+        this.localizacion = localizacion;
     }
 
     // Getters and Setters
@@ -42,9 +46,6 @@ public class Producto {
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }
 
-    public String getIdLocalizacion() { return idLocalizacion; }
-    public void setIdLocalizacion(String idLocalizacion) { this.idLocalizacion = idLocalizacion; }
-
     public double getPrecioSuministrador() { return precioSuministrador; }
     public void setPrecioSuministrador(double precioSuministrador) { this.precioSuministrador = precioSuministrador; }
 
@@ -56,4 +57,7 @@ public class Producto {
 
     public String getFechaStock() { return fechaStock; }
     public void setFechaStock(String fechaStock) { this.fechaStock = fechaStock; }
+
+    public Localizacion getLocalizacion() { return localizacion; }
+    public void setLocalizacion(Localizacion localizacion) { this.localizacion = localizacion; }
 }

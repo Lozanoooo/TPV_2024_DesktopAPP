@@ -36,6 +36,12 @@ public class RestClientService {
         return mapper.readValue(response, new TypeReference<List<Producto>>() {});
     }
 
+    public static boolean deleteProducto(String codigoBarra) throws IOException, ParseException {
+        String url = BASE_URL + "productos/" + codigoBarra;
+        String response = HttpUtil.sendDeleteRequest(url);
+        return response.equals("success");
+    }
+
     public static String post(String endpoint, Map<String, String> data) throws Exception {
         String url = BASE_URL + endpoint;
         ObjectMapper mapper = new ObjectMapper();
@@ -63,4 +69,6 @@ public class RestClientService {
         String response = HttpUtil.sendDeleteRequest(url);
         return response.equals("success");
     }
+
+
 }

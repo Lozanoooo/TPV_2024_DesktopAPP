@@ -69,14 +69,6 @@
                     <TextFieldTableCell fx:factory="forTableColumn" />
                 </cellFactory>
             </TableColumn>
-            <TableColumn fx:id="idLocalizacionColumn" prefWidth="100.0" text="ID Localizacion">
-                <cellValueFactory>
-                    <PropertyValueFactory property="idLocalizacion" />
-                </cellValueFactory>
-                <cellFactory>
-                    <TextFieldTableCell fx:factory="forTableColumn" />
-                </cellFactory>
-            </TableColumn>
             <TableColumn fx:id="precioSuministradorColumn" prefWidth="100.0" text="Precio Suministrador">
                 <cellValueFactory>
                     <PropertyValueFactory property="precioSuministrador" />
@@ -101,9 +93,49 @@
                     <TextFieldTableCell fx:factory="forTableColumn" />
                 </cellFactory>
             </TableColumn>
-            <TableColumn fx:id="fechaStockColumn" prefWidth="100.0" text="Fecha Stock">
+            <TableColumn fx:id="fechaStockColumn" prefWidth="150.0" text="Fecha Stock">
                 <cellValueFactory>
                     <PropertyValueFactory property="fechaStock" />
+                </cellValueFactory>
+                <cellFactory>
+                    <TextFieldTableCell fx:factory="forTableColumn" />
+                </cellFactory>
+            </TableColumn>
+            <TableColumn fx:id="idLocalizacionColumn" prefWidth="100.0" text="ID Localizacion">
+                <cellValueFactory>
+                    <PropertyValueFactory property="localizacion.idLocalizacion" />
+                </cellValueFactory>
+                <cellFactory>
+                    <TextFieldTableCell fx:factory="forTableColumn" />
+                </cellFactory>
+            </TableColumn>
+            <TableColumn fx:id="pasilloTiendaColumn" prefWidth="100.0" text="Pasillo Tienda">
+                <cellValueFactory>
+                    <PropertyValueFactory property="localizacion.pasilloTienda" />
+                </cellValueFactory>
+                <cellFactory>
+                    <TextFieldTableCell fx:factory="forTableColumn" />
+                </cellFactory>
+            </TableColumn>
+            <TableColumn fx:id="estanteriaTiendaColumn" prefWidth="100.0" text="Estanteria Tienda">
+                <cellValueFactory>
+                    <PropertyValueFactory property="localizacion.estanteriaTienda" />
+                </cellValueFactory>
+                <cellFactory>
+                    <TextFieldTableCell fx:factory="forTableColumn" />
+                </cellFactory>
+            </TableColumn>
+            <TableColumn fx:id="pasilloAlmacenColumn" prefWidth="100.0" text="Pasillo Almacen">
+                <cellValueFactory>
+                    <PropertyValueFactory property="localizacion.pasilloAlmacen" />
+                </cellValueFactory>
+                <cellFactory>
+                    <TextFieldTableCell fx:factory="forTableColumn" />
+                </cellFactory>
+            </TableColumn>
+            <TableColumn fx:id="estanteriaAlmacenColumn" prefWidth="100.0" text="Estanteria Almacen">
+                <cellValueFactory>
+                    <PropertyValueFactory property="localizacion.estanteriaAlmacen" />
                 </cellValueFactory>
                 <cellFactory>
                     <TextFieldTableCell fx:factory="forTableColumn" />
@@ -127,6 +159,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <TextField fx:id="codigoBarraField" promptText="Codigo Barra" />
@@ -139,10 +173,14 @@
                 <TextField fx:id="suministradorField" promptText="Suministrador" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <TextField fx:id="gananciaField" promptText="Ganancia" GridPane.rowIndex="3" />
                 <TextField fx:id="fechaStockField" prefHeight="23.0" prefWidth="167.0" promptText="Fecha Stock" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <TextField fx:id="pasilloTiendaField" promptText="Pasillo Tienda" GridPane.rowIndex="5" />
+                <TextField fx:id="estanteriaTiendaField" promptText="Estanteria Tienda" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <TextField fx:id="pasilloAlmacenField" promptText="Pasillo Almacen" GridPane.rowIndex="6" />
+                <TextField fx:id="estanteriaAlmacenField" promptText="Estanteria Almacen" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             </children>
-         <HBox.margin>
-            <Insets bottom="20.0" top="20.0" />
-         </HBox.margin>
+            <HBox.margin>
+                <Insets bottom="20.0" top="20.0" />
+            </HBox.margin>
         </GridPane>
         <VBox alignment="CENTER" spacing="10">
             <Button fx:id="addButton" mnemonicParsing="false" prefWidth="100.0" text="Añadir" />
