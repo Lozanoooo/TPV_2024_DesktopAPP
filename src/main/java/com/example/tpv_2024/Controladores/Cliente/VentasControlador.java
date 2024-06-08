@@ -101,6 +101,30 @@ public class VentasControlador implements Initializable {
 
         // Añadir listener para el campo del código de barra
         TF_Cod_Barra.setOnAction(event -> comprobarProducto(TF_Cod_Barra.getText()));
+
+        // Agregar listener para la columna de cantidad
+        quantityColumn.setOnEditCommit(event -> {
+            Ventas producto = event.getRowValue();
+            int nuevaCantidad = event.getNewValue();
+            producto.setCantidad(nuevaCantidad);
+            double nuevoTotal = producto.getPrecio() * nuevaCantidad;
+            producto.setTotal(nuevoTotal);
+            productTable.refresh(); // Actualizar la tabla
+            updateTotal();
+            updateCantidad();
+        });
+
+// Agregar listener para la columna de precio
+        productPriceColumn.setOnEditCommit(event -> {
+            Ventas producto = event.getRowValue();
+            double nuevoPrecio = event.getNewValue();
+            producto.setPrecio(nuevoPrecio);
+            double nuevoTotal = nuevoPrecio * producto.getCantidad();
+            producto.setTotal(nuevoTotal);
+            productTable.refresh(); // Actualizar la tabla
+            updateTotal();
+        });
+
     }
 
     private void calcularCambios(ActionEvent actionEvent) {
