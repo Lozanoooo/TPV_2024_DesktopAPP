@@ -1,6 +1,7 @@
 package com.example.tpv_2024.Controladores.Cliente;
 
 import com.example.tpv_2024.Modelos.Producto;
+import com.example.tpv_2024.Servicio.RestClientService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,8 +12,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
+import org.apache.hc.core5.http.ParseException;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProductosControlador implements Initializable {
@@ -99,6 +103,18 @@ public class ProductosControlador implements Initializable {
 
         addButton.setOnAction(this::onAdd);
         deleteButton.setOnAction(this::onDelete);
+
+        // Cargar productos desde el servidor
+        loadProductos();
+    }
+
+    private void loadProductos() {
+        try {
+            List<Producto> productosList = RestClientService.getProductos();
+            productos.setAll(productosList);
+        } catch (IOException | ParseException e) {
+            showAlert("Error al cargar productos", "No se pudieron cargar los productos desde el servidor");
+        }
     }
 
     @FXML
