@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
@@ -134,11 +135,15 @@ public class VentasControlador implements Initializable {
             double cambios = enEfectivo - total;
             this.l_cambios.setText(String.format("€ %.2f", cambios));
         } catch (NumberFormatException e) {
+            // Salir primero de la pantalla completa
+            Stage stage = (Stage) this.pagar_btn.getScene().getWindow();
+            stage.setFullScreen(false);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error al calcular cambios");
             alert.setContentText("Por favor, ingrese una cantidad válida");
             alert.showAndWait();
+            stage.setFullScreen(true);
         }
     }
 
@@ -236,11 +241,15 @@ public class VentasControlador implements Initializable {
             } catch (Exception e) {
                 // Manejar cualquier excepción
                 javafx.application.Platform.runLater(() -> {
+                    // Salir primero de la pantalla completa
+                    Stage stage = (Stage) this.TF_Cod_Barra.getScene().getWindow();
+                    stage.setFullScreen(false);
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText("Producto no encontrado");
                     alert.setContentText("El producto con el código de barra " + codigo + " no se encontró en la base de datos.");
                     alert.showAndWait();
+                    stage.setFullScreen(true);
                 });
                 e.printStackTrace();
             }

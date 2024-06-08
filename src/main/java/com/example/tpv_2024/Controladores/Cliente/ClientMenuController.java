@@ -7,9 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import java.awt.Desktop;
+import java.net.URI;
+import java.io.IOException;
 
 public class ClientMenuController implements Initializable {
 
@@ -75,6 +80,33 @@ public class ClientMenuController implements Initializable {
             System.exit(0);
         }else {
             stage.setFullScreen(true);
+        }
+    }
+
+    public void onReport(){
+        // salir de la ventana completa y abrir el correo para enviar el reporte
+        Stage stage = (Stage) report_btn.getScene().getWindow();
+        stage.setFullScreen(false);
+        try {
+            String recipient = "binaryglobalsl@gmail.com";
+            String subject = "ReporteTPV2024_ID:001";
+            openMailClient(recipient, subject);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void openMailClient(String recipient, String subject) {
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.MAIL)) {
+            try {
+                URI mailto = new URI("mailto:" + recipient + "?subject=" + subject);
+
+                Desktop.getDesktop().mail(mailto);
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Desktop mail not supported");
         }
     }
 }
