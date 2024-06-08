@@ -138,6 +138,7 @@ public class VentasControlador implements Initializable {
             this.TF_Cantidad.clear();
             updateTotal();
             updateCantidad();
+            System.out.println("Producto agregado");
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -145,6 +146,12 @@ public class VentasControlador implements Initializable {
             alert.setContentText("Por favor, ingrese los datos correctamente");
             alert.showAndWait();
         }
+    }
+    public void onBorrar(ActionEvent event) {
+        Ventas producto = productTable.getSelectionModel().getSelectedItem();
+        productos.remove(producto);
+        updateTotal();
+        updateCantidad();
     }
 
     public void onPagar(ActionEvent event) {
@@ -187,6 +194,9 @@ public class VentasControlador implements Initializable {
                     TF_Precio.setText(String.valueOf(producto.getPrecio()));
                     TF_Cantidad.setText(String.valueOf(producto.getCantidad()));
                     TF_Cantidad.setText("1");
+
+                    // Agregar el producto a la lista de productos simulando un click en el botón de agregar
+                    agregar_btn.fire();
                 });
             } catch (Exception e) {
                 // Manejar cualquier excepción
@@ -200,5 +210,6 @@ public class VentasControlador implements Initializable {
                 e.printStackTrace();
             }
         });
+
     }
 }

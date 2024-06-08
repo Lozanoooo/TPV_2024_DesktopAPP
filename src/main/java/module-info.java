@@ -6,6 +6,7 @@ module com.example.tpv_2024 {
     requires org.apache.httpcomponents.client5.httpclient5;
     requires org.apache.httpcomponents.core5.httpcore5;
     requires com.fasterxml.jackson.databind;
+    requires org.slf4j;
 
     opens com.example.tpv_2024 to javafx.fxml;
     opens com.example.tpv_2024.Controladores.Cliente to javafx.fxml;

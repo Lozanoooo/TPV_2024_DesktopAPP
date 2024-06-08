@@ -30,7 +30,7 @@ public class LoginControlador implements Initializable {
     public TextField pwd_fld;
     public Button login_btn;
     public Label error_lbl;
-    private EmpleadoService empleadoService;
+    private EmpleadoService empleadoService = new EmpleadoService();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -75,9 +75,11 @@ public class LoginControlador implements Initializable {
                 Modelo.getInstance().getViewFactory().showClientWindow();
 
                 // Obtener el objeto Empleado desde el servicio
+
                 System.out.println("Obteniendo empleado desde el servicio");
                 Empleado empleado = empleadoService.getEmpleadoPorId(usuario_fld.getText());
                 SessionManager.getInstance().setEmpleadoLogueado(empleado);
+
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error al iniciar sesión", "Usuario y/o contraseña incorrectos");
             }

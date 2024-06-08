@@ -83,7 +83,7 @@
                   <VBox.margin>
                      <Insets />
                   </VBox.margin></Button>
-                    <Button mnemonicParsing="false" prefWidth="209.0" styleClass="ventas_button_borrar" text="Borrar">
+                    <Button mnemonicParsing="false" prefWidth="209.0" styleClass="ventas_button_borrar" onAction="#onBorrar" text="Borrar">
                   <VBox.margin>
                      <Insets bottom="30.0" />
                   </VBox.margin></Button>
