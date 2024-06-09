@@ -73,7 +73,7 @@
                 <padding>
                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                 </padding>
-                <VBox spacing="15.0" VBox.vgrow="ALWAYS">
+                <VBox alignment="CENTER_LEFT" spacing="15.0" VBox.vgrow="ALWAYS">
                     <TextField id="TF_Cod_Barra" fx:id="TF_Cod_Barra" alignment="TOP_CENTER" maxWidth="Infinity" promptText="Cod. Barra">
                   <font>
                      <Font size="18.0" />
@@ -93,7 +93,7 @@
                     <Button fx:id="agregar_btn" alignment="TOP_CENTER" contentDisplay="RIGHT" maxWidth="Infinity" mnemonicParsing="false" onAction="#onAgregar" styleClass="ventas_button_add" text="Añadir" textAlignment="CENTER" />
                     <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#onBorrar" styleClass="ventas_button_borrar" text="Borrar">
                   <VBox.margin>
-                     <Insets bottom="40.0" />
+                     <Insets />
                   </VBox.margin></Button>
                     <CheckBox fx:id="chBox_socio" maxWidth="Infinity" mnemonicParsing="false" onAction="#onSocio" text="¿ES SOCIO?">
                   <font>
@@ -101,7 +101,7 @@
                   </font></CheckBox>
                     <TextField fx:id="TF_ID_Cliente" maxWidth="Infinity" promptText="ID Cliente">
                   <VBox.margin>
-                     <Insets bottom="40.0" />
+                     <Insets />
                   </VBox.margin>
                   <font>
                      <Font size="18.0" />
@@ -123,7 +123,7 @@
                      </RadioButton>
                     <TextField fx:id="tf_EnEfectivo" maxWidth="Infinity" promptText="En efectivo">
                   <VBox.margin>
-                     <Insets bottom="40.0" />
+                     <Insets />
                   </VBox.margin>
                   <font>
                      <Font size="18.0" />
