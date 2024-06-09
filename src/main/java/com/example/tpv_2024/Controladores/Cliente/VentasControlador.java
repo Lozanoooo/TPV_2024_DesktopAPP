@@ -219,6 +219,9 @@ public void onPagar(ActionEvent event) {
     String idCliente = "";
     if (chBox_socio.isSelected()) {
         idCliente = TF_ID_Cliente.getText();
+    }else {
+        idCliente = "2"; /* ID de cliente por defecto si no es socio (puedes cambiarlo según tus necesidades)
+        Lo ideal sería que el cliente se registre en la base de datos o hacer uno al principio que sea cliente por defecto*/
     }
 
     // Crear una lista para almacenar los códigos de barras de los productos
