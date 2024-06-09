@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
@@ -56,6 +57,20 @@ public class EmpleadosControlador implements Initializable {
 
         // Añadir listener para el campo de búsqueda por ID
         idEmpleadoField.setOnAction(event -> buscarEmpleado(idEmpleadoField.getText()));
+    }
+
+    public void cargarDatosIniciales() {
+        CompletableFuture.runAsync(() -> {
+            try {
+                // Llama al servicio para obtener todos los empleados
+                List<Empleado> empleadosList = EmpleadoService.obtenerTodosLosEmpleados();
+                // Actualiza la UI en el hilo de JavaFX
+                javafx.application.Platform.runLater(() -> empleados.addAll(empleadosList));
+            } catch (Exception e) {
+                // Maneja cualquier excepción
+                e.printStackTrace();
+            }
+        });
     }
 
     private void buscarEmpleado(String idEmpleado) {

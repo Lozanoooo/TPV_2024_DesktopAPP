@@ -16,6 +16,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 public class EmpleadoService {
 
@@ -142,4 +145,18 @@ public class EmpleadoService {
             }
         }
     }
+
+    public static List<Empleado> obtenerTodosLosEmpleados() throws IOException {
+        String url = BASE_URL;
+        try {
+            String response = HttpUtil.sendGetRequest(url);
+            ObjectMapper mapper = new ObjectMapper();
+            logger.debug("Response: {}", response);
+            return Arrays.asList(mapper.readValue(response, Empleado[].class));
+        } catch (IOException e) {
+            logger.error("Error al obtener los empleados: {}", e.getMessage());
+            throw new RuntimeException("Error al obtener los empleados: " + e.getMessage(), e);
+        }
+    }
 }
+
