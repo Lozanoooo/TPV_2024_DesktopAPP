@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <VBox prefHeight="750.0" prefWidth="850.0" stylesheets="@../../Styles/clientes.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tpv_2024.Controladores.Cliente.ClientesControlador">
     <HBox styleClass="header_container">
@@ -25,7 +26,7 @@
         </Label>
     </HBox>
 
-    <TableView fx:id="clientesTable" editable="true" styleClass="table_container" VBox.vgrow="ALWAYS">
+    <TableView fx:id="clientesTable" editable="true" prefHeight="471.0" prefWidth="850.0" styleClass="table_container" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="idClienteColumn" prefWidth="100.0" sortable="false" text="ID Cliente" />
             <TableColumn fx:id="nombreColumn" prefWidth="150.0" sortable="false" text="Nombre" />
@@ -40,30 +41,56 @@
         </columnResizePolicy>
     </TableView>
 
-    <GridPane alignment="CENTER" hgap="15" vgap="10">
+    <HBox alignment="CENTER" spacing="15.0">
+      <VBox alignment="CENTER" prefHeight="315.0" prefWidth="184.0" spacing="10.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Buscar por ID:" />
+            <TextField fx:id="TF_buscarPorID" promptText="Buscar por ID" />
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </VBox>
+      <VBox prefHeight="268.0" prefWidth="127.0" spacing="10.0">
+         <HBox.margin>
+            <Insets top="10.0" />
+         </HBox.margin></VBox>
+      <GridPane prefHeight="261.0" prefWidth="273.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="68.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="199.0" />
         </columnConstraints>
         <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-        <VBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-        </VBox.margin>
-        <TextField fx:id="nombreField" promptText="Nombre" />
-        <TextField fx:id="apellidosField" promptText="Apellidos" GridPane.columnIndex="1" />
-        <TextField fx:id="telefonoField" promptText="Telefono" GridPane.rowIndex="1" />
-        <TextField fx:id="direccionField" promptText="Direccion" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <TextField fx:id="emailField" promptText="Email" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-        <TextField fx:id="cifField" promptText="CIF" GridPane.columnIndex="2" />
-    </GridPane>
-
-    <HBox alignment="CENTER" spacing="15.0">
-        <Button styleClass="clientes_button_add" text="Añadir" />
-        <Button styleClass="clientes_button_elim" text="Eliminar" />
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:" />
+              <TextField fx:id="nombreField" promptText="Nombre" GridPane.columnIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Apellidos:" GridPane.rowIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono:" GridPane.rowIndex="2" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:" GridPane.rowIndex="3" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" GridPane.rowIndex="4" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CIF:" GridPane.rowIndex="5" />
+              <TextField fx:id="apellidosField" promptText="Apellidos" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+              <TextField fx:id="telefonoField" promptText="Telefono" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+              <TextField fx:id="direccionField" promptText="Direccion" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+              <TextField fx:id="emailField" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+              <TextField fx:id="cifField" promptText="CIF" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         </children>
+      </GridPane>
+      <VBox prefHeight="266.0" prefWidth="42.0" />
+      <VBox alignment="CENTER" prefHeight="315.0" prefWidth="195.0" spacing="30.0">
+         <children>
+              <Button fx:id="BT_agregar" alignment="CENTER" onAction="#onAdd" prefHeight="25.0" prefWidth="196.0" text="Añadir" />
+              <Button fx:id="BT_eliminar" onAction="#onDelete" prefHeight="25.0" prefWidth="195.0" text="Eliminar" />
+            <Button fx:id="BT_actualizar" mnemonicParsing="false" onAction="#onActualizar" prefHeight="25.0" prefWidth="195.0" text="Actualizar" />
+         </children>
+      </VBox>
     </HBox>
 
     <HBox alignment="CENTER_RIGHT" spacing="15.0" styleClass="total_labels_container">

@@ -1,50 +1,29 @@
 package com.example.tpv_2024.Servicio;
 
-import com.example.tpv_2024.Modelos.Empleado;
-import com.example.tpv_2024.util.HttpUtil;
+import com.example.tpv_2024.Modelos.Cliente;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.ObservableList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+public class ClienteService {
 
-public class EmpleadoService {
-
-    private static final Logger logger = LoggerFactory.getLogger(EmpleadoService.class);
-    private static final String BASE_URL = "http://localhost:8080/empleados";
-
-    public Empleado getEmpleadoPorId(String idEmpleado) {
-        String url = BASE_URL + "/" + idEmpleado;
-        try {
-            String response = HttpUtil.sendGetRequest(url);
-            ObjectMapper mapper = new ObjectMapper();
-            logger.debug("Response: {}", response);
-            return mapper.readValue(response, Empleado.class);
-        } catch (IOException e) {
-            logger.error("Error al obtener el empleado: {}", e.getMessage());
-            throw new RuntimeException("Error al obtener el empleado: " + e.getMessage(), e);
-        }
-    }
-
-    public static Empleado buscarEmpleado(String idEmpleado) throws Exception {
-        System.out.println("Buscando empleado con ID: " + idEmpleado);
-        String urlString = "http://localhost:8080/empleados/" + idEmpleado;
+    public static Cliente buscarCliente(String idCliente) throws Exception {
+        System.out.println("Buscando cliente con ID: " + idCliente);
+        String urlString = "http://localhost:8080/clientes/" + idCliente;
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
 
         int responseCode = conn.getResponseCode();
         if (responseCode == 200) { // 200 OK
-            System.out.println("Empleado encontrado");
+            System.out.println("Cliente encontrado");
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String inputLine;
             StringBuilder response = new StringBuilder();
@@ -57,34 +36,37 @@ public class EmpleadoService {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.toString());
 
-            // Crear un objeto Empleado con los datos obtenidos
-            Empleado empleado = new Empleado();
-            empleado.setIdEmpleado((int) jsonNode.get("idEmpleado").asLong());
-            empleado.setNombre(jsonNode.get("nombre").asText());
-            empleado.setApellidos(jsonNode.get("apellidos").asText());
-            empleado.setPuesto(jsonNode.get("puesto").asText());
+            // Crear un objeto Cliente con los datos obtenidos
+            Cliente cliente = new Cliente();
+            cliente.setIdCliente(jsonNode.get("idCliente").asLong());
+            cliente.setNombre(jsonNode.get("nombre").asText());
+            cliente.setApellidos(jsonNode.get("apellidos").asText());
+            cliente.setDireccion(jsonNode.get("direccion").asText());
+            cliente.setEmail(jsonNode.get("email").asText());
+            cliente.setTelefono(jsonNode.get("telefono").asText());
+            cliente.setCif(jsonNode.get("cif").asText());
 
-            return empleado;
+            return cliente;
         } else {
-            throw new Exception("Empleado no encontrado");
+            throw new Exception("Cliente no encontrado");
         }
     }
 
-    public static void actualizarEmpleados(ObservableList<Empleado> empleados) {
-        for (Empleado empleado : empleados) {
-            Long idEmpleado = (long) empleado.getIdEmpleado();
-            String urlString = "http://localhost:8080/empleados/" + idEmpleado;
+    public static void actualizarClientes(ObservableList<Cliente> clientes) {
+        for (Cliente cliente : clientes) {
+            Long idCliente = cliente.getIdCliente();
+            String urlString = "http://localhost:8080/clientes/" + idCliente;
 
             try {
                 URL url = new URL(urlString);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-                // Verificar si el empleado existe
+                // Verificar si el cliente existe
                 conn.setRequestMethod("GET");
                 int responseCode = conn.getResponseCode();
 
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    // El empleado existe, realizar una solicitud PUT para actualizar
+                    // El cliente existe, realizar una solicitud PUT para actualizar
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("PUT");
                     conn.setRequestProperty("Content-Type", "application/json");
@@ -92,10 +74,13 @@ public class EmpleadoService {
 
                     // Crear un objeto Map para representar la estructura JSON
                     Map<String, Object> jsonData = new HashMap<>();
-                    jsonData.put("idEmpleado", empleado.getIdEmpleado());
-                    jsonData.put("nombre", empleado.getNombre());
-                    jsonData.put("apellidos", empleado.getApellidos());
-                    jsonData.put("puesto", empleado.getPuesto());
+                    jsonData.put("idCliente", cliente.getIdCliente());
+                    jsonData.put("nombre", cliente.getNombre());
+                    jsonData.put("apellidos", cliente.getApellidos());
+                    jsonData.put("direccion", cliente.getDireccion());
+                    jsonData.put("email", cliente.getEmail());
+                    jsonData.put("telefono", cliente.getTelefono());
+                    jsonData.put("cif", cliente.getCif());
 
                     // Convertir el objeto Map a JSON
                     ObjectMapper objectMapper = new ObjectMapper();
@@ -105,10 +90,15 @@ public class EmpleadoService {
                     conn.getOutputStream().write(json.getBytes());
 
                     responseCode = conn.getResponseCode();
-                    System.out.println("Empleado actualizado: " + idEmpleado);
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        System.out.println("Cliente actualizado: " + idCliente);
+                    } else {
+                        System.out.println("Error al actualizar el cliente: " + idCliente);
+                        System.out.println("Response code: " + responseCode);
+                    }
                 } else if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
-                    // El empleado no existe, realizar una solicitud POST para crear
-                    urlString = "http://localhost:8080/empleados";
+                    // El cliente no existe, realizar una solicitud POST para crear
+                    urlString = "http://localhost:8080/clientes";
                     url = new URL(urlString);
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
@@ -117,9 +107,12 @@ public class EmpleadoService {
 
                     // Crear un objeto Map para representar la estructura JSON
                     Map<String, Object> jsonData = new HashMap<>();
-                    jsonData.put("nombre", empleado.getNombre());
-                    jsonData.put("apellidos", empleado.getApellidos());
-                    jsonData.put("puesto", empleado.getPuesto());
+                    jsonData.put("nombre", cliente.getNombre());
+                    jsonData.put("apellidos", cliente.getApellidos());
+                    jsonData.put("direccion", cliente.getDireccion());
+                    jsonData.put("email", cliente.getEmail());
+                    jsonData.put("telefono", cliente.getTelefono());
+                    jsonData.put("cif", cliente.getCif());
 
                     // Convertir el objeto Map a JSON
                     ObjectMapper objectMapper = new ObjectMapper();
@@ -129,15 +122,15 @@ public class EmpleadoService {
                     conn.getOutputStream().write(json.getBytes());
 
                     responseCode = conn.getResponseCode();
-                    System.out.println("Empleado creado: " + idEmpleado);
+                    System.out.println("Cliente creado: " + idCliente);
                 } else {
-                    System.out.println("Error al verificar el empleado: " + idEmpleado);
+                    System.out.println("Error al verificar el cliente: " + idCliente);
                     System.out.println("Response code: " + responseCode);
                 }
 
                 conn.disconnect();
             } catch (Exception e) {
-                System.out.println("Error al procesar el empleado: " + idEmpleado);
+                System.out.println("Error al procesar el cliente: " + idCliente);
                 e.printStackTrace();
             }
         }
