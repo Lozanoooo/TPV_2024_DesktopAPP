@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -32,6 +33,7 @@ public class ProductosControlador implements Initializable {
     @FXML
     private TableColumn<Producto, String> suministradorColumn;
     @FXML
+
     private TableColumn<Producto, String> categoriaColumn;
     @FXML
     private TableColumn<Producto, String> Column_pasilloAlmacen;
@@ -54,6 +56,7 @@ public class ProductosControlador implements Initializable {
     @FXML
     private TextField suministradorField;
     @FXML
+
     private TextField categoriaField;
     @FXML
     private TextField PasiAlmField;
@@ -75,6 +78,7 @@ public class ProductosControlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         productos = FXCollections.observableArrayList();
+
 
         this.codigoBarraColumn.setCellValueFactory(new PropertyValueFactory<>("codigoBarra"));
         this.nombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -285,3 +289,4 @@ public class ProductosControlador implements Initializable {
         }
     }
 }
+
