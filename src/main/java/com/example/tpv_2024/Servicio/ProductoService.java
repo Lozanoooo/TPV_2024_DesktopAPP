@@ -9,16 +9,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/*
-* Clase diseñada para interactuar con un servicio web que proporciona información sobre productos.
-* Esta clase contiene un único método estático llamado verificarProducto que se utiliza para obtener
-* la información de un producto basado en su código de barras.
-* */
+// Excepción personalizada
+class ProductoNoEncontradoException extends Exception {
+    public ProductoNoEncontradoException(String message) {
+        super(message);
+    }
+}
+
 public class ProductoService {
 
     public static Ventas verificarProducto(String codigo) throws Exception {
         System.out.println("Verificando producto con código de barras: " + codigo);
-        String urlString = "http://localhost:8080/productos/" +codigo;
+        String urlString = "http://localhost:8080/productos/" + codigo;
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -44,8 +46,10 @@ public class ProductoService {
             producto.setPrecio(jsonNode.get("precioVenta").asDouble());
 
             return producto;
+        } else if (responseCode == 404) {
+            throw new ProductoNoEncontradoException("Producto con código de barras " + codigo + " no encontrado");
         } else {
-            throw new Exception("Producto no encontrado");
+            throw new Exception("Error en la solicitud: Código de respuesta " + responseCode);
         }
     }
 }
