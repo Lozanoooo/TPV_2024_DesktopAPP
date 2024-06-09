@@ -83,12 +83,12 @@
                   <VBox.margin>
                      <Insets />
                   </VBox.margin></Button>
-                    <Button mnemonicParsing="false" prefWidth="209.0" styleClass="ventas_button_borrar" onAction="#onBorrar" text="Borrar">
+                    <Button mnemonicParsing="false" onAction="#onBorrar" prefWidth="209.0" styleClass="ventas_button_borrar" text="Borrar">
                   <VBox.margin>
                      <Insets bottom="30.0" />
                   </VBox.margin></Button>
-               <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="167.0" text="¿ES SOCIO?" />
-               <TextField promptText="ID Cliente" />
+               <CheckBox fx:id="chBox_socio" mnemonicParsing="false" onAction="#onSocio" prefHeight="18.0" prefWidth="167.0" text="¿ES SOCIO?" />
+               <TextField fx:id="TF_ID_Cliente" promptText="ID Cliente" />
                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Forma de pago">
                   <font>
                      <Font size="24.0" />
@@ -96,12 +96,12 @@
                </Text>
                <Pane prefHeight="111.0" prefWidth="162.0">
                   <children>
-                     <RadioButton fx:id="rbt_visa" layoutY="59.0" mnemonicParsing="false" text="VISA">
+                     <RadioButton fx:id="rbt_visa" layoutY="59.0" mnemonicParsing="false" onAction="#metodoPagoVisa" text="VISA">
                         <font>
                            <Font size="18.0" />
                         </font>
                      </RadioButton>
-                     <RadioButton fx:id="rbt_efectivo" layoutY="21.0" mnemonicParsing="false" text="EFECTIVO">
+                     <RadioButton fx:id="rbt_efectivo" layoutY="21.0" mnemonicParsing="false" onAction="#metodoPagoEfectivo" text="EFECTIVO">
                         <font>
                            <Font size="18.0" />
                         </font>
