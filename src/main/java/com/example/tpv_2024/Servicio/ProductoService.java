@@ -14,9 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /*
-* Clase diseñada para interactuar con un servicio web que proporciona información sobre productos.
-* Esta clase contiene un único método estático llamado verificarProducto que se utiliza para obtener
-* la información de un producto basado en su código de barras.
+* Clase diseñada para interactuar con un servicio web que proporciona o actualizar información sobre productos.
 * */
 public class ProductoService {
 
