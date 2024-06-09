@@ -120,3 +120,19 @@
 .error_lbl {
     -fx-text-fill: #FF0000;
 }
+
+.empleado_button_act {
+    -fx-pref-width: 100px;
+    -fx-pref-height: 40px;
+    -fx-background-color: linear-gradient(to right, #71babb, #398076);
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 1.1em;
+    -fx-background-radius: 5;
+    -fx-font-family: "Calibri Light";
+    -fx-effect: dropshadow(three-pass-box, #AAAAAA, 3, 0, 0, 3);
+}
+
+.empleado_button_act:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #00b9d7;
+}

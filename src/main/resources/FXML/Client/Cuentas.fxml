@@ -86,9 +86,9 @@
       <VBox prefHeight="266.0" prefWidth="42.0" />
       <VBox alignment="CENTER" prefHeight="315.0" prefWidth="195.0" spacing="30.0">
          <children>
-              <Button fx:id="BT_agregar" alignment="CENTER" onAction="#onAdd" prefHeight="25.0" prefWidth="196.0" text="Añadir" />
-              <Button fx:id="BT_eliminar" onAction="#onDelete" prefHeight="25.0" prefWidth="195.0" text="Eliminar" />
-            <Button fx:id="BT_actualizar" mnemonicParsing="false" onAction="#onActualizar" prefHeight="25.0" prefWidth="195.0" text="Actualizar" />
+              <Button fx:id="BT_agregar" alignment="CENTER" onAction="#onAdd" prefHeight="25.0" prefWidth="196.0" styleClass="clientes_button_add" text="Añadir" />
+              <Button fx:id="BT_eliminar" onAction="#onDelete" prefHeight="25.0" prefWidth="195.0" styleClass="clientes_button_elim" text="Eliminar" />
+            <Button fx:id="BT_actualizar" mnemonicParsing="false" onAction="#onActualizar" prefHeight="25.0" prefWidth="195.0" styleClass="empleado_button_act" text="Actualizar" />
          </children>
       </VBox>
     </HBox>

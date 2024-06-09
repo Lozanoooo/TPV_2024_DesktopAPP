@@ -169,9 +169,9 @@
          </HBox.margin>
         </GridPane>
         <VBox alignment="CENTER" spacing="10">
-            <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAgregar" prefWidth="100.0" text="Añadir" />
-            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onBorrar" prefWidth="100.0" text="Borrar" />
-            <Button fx:id="updateButton" mnemonicParsing="false" onAction="#onActualizar" prefWidth="100.0" text="Actualizar" />
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAgregar" prefWidth="100.0" styleClass="productos_button_add" text="Añadir" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onBorrar" prefWidth="100.0" styleClass="productos_button_elim" text="Borrar" />
+            <Button fx:id="updateButton" mnemonicParsing="false" onAction="#onActualizar" prefWidth="100.0" styleClass="productos_button_add" text="Actualizar" />
         </VBox>
     </HBox>
 </VBox>
