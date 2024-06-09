@@ -17,4 +17,5 @@ module com.example.tpv_2024 {
     exports com.example.tpv_2024.Controladores.Cliente;
     exports com.example.tpv_2024.Modelos;
     exports com.example.tpv_2024.Vistas;
+    exports com.example.tpv_2024.Servicio;
 }

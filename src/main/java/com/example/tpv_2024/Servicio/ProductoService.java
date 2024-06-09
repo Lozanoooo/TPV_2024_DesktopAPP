@@ -1,5 +1,6 @@
-package com.example.tpv_2024.Modelos;
+package com.example.tpv_2024.Servicio;
 
+import com.example.tpv_2024.Modelos.Ventas;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -8,9 +9,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ProductoModelo {
+/*
+* Clase diseñada para interactuar con un servicio web que proporciona información sobre productos.
+* Esta clase contiene un único método estático llamado verificarProducto que se utiliza para obtener
+* la información de un producto basado en su código de barras.
+* */
+public class ProductoService {
 
     public static Ventas verificarProducto(String codigo) throws Exception {
+        System.out.println("Verificando producto con código de barras: " + codigo);
         String urlString = "http://localhost:8080/productos/" +codigo;
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

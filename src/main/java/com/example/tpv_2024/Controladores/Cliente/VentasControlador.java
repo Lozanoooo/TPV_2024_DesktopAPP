@@ -1,6 +1,6 @@
 package com.example.tpv_2024.Controladores.Cliente;
 
-import com.example.tpv_2024.Modelos.ProductoModelo;
+import com.example.tpv_2024.Servicio.ProductoService;
 import com.example.tpv_2024.Modelos.Ventas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -202,9 +202,12 @@ public class VentasControlador implements Initializable {
         updateTotal();
         updateCantidad();
     }
-
+//TODO
     public void onPagar(ActionEvent event) {
         System.out.println("Pagando");
+        // Guarda el registro de la venta en la base de datos del servidor
+        // Se guardará los códigos de barras de los productos, el empleado que realizó la venta y el id del cliente si es que lo hay
+
 
     }
 
@@ -241,7 +244,7 @@ public class VentasControlador implements Initializable {
         // Crear una tarea asíncrona para llamar al servidor
         CompletableFuture.runAsync(() -> {
             try {
-                Ventas producto = ProductoModelo.verificarProducto(codigo);
+                Ventas producto = ProductoService.verificarProducto(codigo);
                 // Actualizar UI en el hilo de JavaFX
                 javafx.application.Platform.runLater(() -> {
                     TF_Nombre.setText(producto.getNombre());
