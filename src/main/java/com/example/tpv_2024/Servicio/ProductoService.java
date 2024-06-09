@@ -4,11 +4,14 @@ import com.example.tpv_2024.Modelos.Producto;
 import com.example.tpv_2024.Modelos.Ventas;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
 * Clase diseñada para interactuar con un servicio web que proporciona información sobre productos.
@@ -98,6 +101,115 @@ public class ProductoService {
             return producto;
         } else {
             throw new Exception("Producto no encontrado");
+        }
+    }
+
+    public static void actualizarProductos(ObservableList<Producto> productos) {
+        for (Producto producto : productos) {
+            String codigoBarra = producto.getCodigoBarra();
+            String urlString = "http://localhost:8080/productos/" + codigoBarra;
+
+            try {
+                URL url = new URL(urlString);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                // Verificar si el producto existe
+                conn.setRequestMethod("GET");
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    // El producto existe, realizar una solicitud PUT para actualizar
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("PUT");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+
+                    // Crear un objeto Map para representar la estructura JSON
+                    Map<String, Object> jsonData = new HashMap<>();
+                    jsonData.put("codigoBarra", producto.getCodigoBarra());
+                    jsonData.put("nombre", producto.getNombre());
+                    jsonData.put("precioVenta", producto.getPrecioVenta());
+                    jsonData.put("categoria", producto.getCategoria());
+                    jsonData.put("stock", producto.getStock());
+                    jsonData.put("precioSuministrador", producto.getPrecioSuministrador());
+                    jsonData.put("suministrador", producto.getSuministrador());
+
+                    // Crear un objeto Map para la localización
+                    Map<String, Object> localizacionData = new HashMap<>();
+                    localizacionData.put("pasilloTienda", producto.getPasilloTienda());
+                    localizacionData.put("estanteriaTienda", producto.getEstanteriaTienda());
+                    localizacionData.put("pasilloAlmacen", producto.getPasilloAlmacen());
+                    localizacionData.put("estanteriaAlmacen", producto.getEstanteriaAlmacen());
+
+                    jsonData.put("localizacion", localizacionData);
+
+                    // Convertir el objeto Map a JSON
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    String json = objectMapper.writeValueAsString(jsonData);
+                    System.out.println(json);
+
+                    // Enviar el JSON en el cuerpo de la solicitud
+                    conn.getOutputStream().write(json.getBytes());
+
+                    responseCode = conn.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        System.out.println("Producto actualizado: " + codigoBarra);
+                    } else {
+                        System.out.println("Error al actualizar el producto: " + codigoBarra);
+                        System.out.println("Response code: " + responseCode);
+                    }
+                } else if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
+                    // El producto no existe, realizar una solicitud POST para crear
+                    urlString = "http://localhost:8080/productos";
+                    url = new URL(urlString);
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+
+                    // Crear un objeto Map para representar la estructura JSON
+                    Map<String, Object> jsonData = new HashMap<>();
+                    jsonData.put("codigoBarra", producto.getCodigoBarra());
+                    jsonData.put("nombre", producto.getNombre());
+                    jsonData.put("precioVenta", producto.getPrecioVenta());
+                    jsonData.put("categoria", producto.getCategoria());
+                    jsonData.put("stock", producto.getStock());
+                    jsonData.put("precioSuministrador", producto.getPrecioSuministrador());
+                    jsonData.put("suministrador", producto.getSuministrador());
+
+                    // Crear un objeto Map para la localización
+                    Map<String, Object> localizacionData = new HashMap<>();
+                    localizacionData.put("pasilloTienda", producto.getPasilloTienda());
+                    localizacionData.put("estanteriaTienda", producto.getEstanteriaTienda());
+                    localizacionData.put("pasilloAlmacen", producto.getPasilloAlmacen());
+                    localizacionData.put("estanteriaAlmacen", producto.getEstanteriaAlmacen());
+
+                    jsonData.put("localizacion", localizacionData);
+
+                    // Convertir el objeto Map a JSON
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    String json = objectMapper.writeValueAsString(jsonData);
+                    System.out.println(json);
+
+                    // Enviar el JSON en el cuerpo de la solicitud
+                    conn.getOutputStream().write(json.getBytes());
+
+                    responseCode = conn.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_CREATED) {
+                        System.out.println("Producto creado: " + codigoBarra);
+                    } else {
+                        System.out.println("Error al crear el producto: " + codigoBarra);
+                    }
+                } else {
+                    System.out.println("Error al verificar el producto: " + codigoBarra);
+                    System.out.println("Response code: " + responseCode);
+                }
+
+                conn.disconnect();
+            } catch (Exception e) {
+                System.out.println("Error al procesar el producto: " + codigoBarra);
+                e.printStackTrace();
+            }
         }
     }
 }

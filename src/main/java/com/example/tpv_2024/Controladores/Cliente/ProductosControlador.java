@@ -186,11 +186,14 @@ public class ProductosControlador implements Initializable {
             Producto productoExistente = buscarProductoEnTabla(codigo);
             if (productoExistente != null) {
                 // Mostrar un mensaje de error
+                Stage stage = (Stage) this.addButton.getScene().getWindow();
+                stage.setFullScreen(false);
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Producto ya existe");
                 alert.setContentText("Ya existe un producto con el código de barra " + codigo + " en la tabla.");
                 alert.showAndWait();
+                stage.setFullScreen(true);
                 return;
             }
 
@@ -248,5 +251,37 @@ public class ProductosControlador implements Initializable {
             }
         }
         return null;
+    }
+
+    @FXML
+    public void onActualizar(ActionEvent event) {
+        // Hace una petición PUT al servidor para actualizar todos los productos existentes en la tabla;
+        // petición POST si el producto no existe, luego limpia la tabla
+        try {
+            ProductoService.actualizarProductos(productos);
+            // Limpiar la tabla después de actualizar los productos
+            productos.clear();
+            // Mostrar un mensaje de éxito
+            Stage stage = (Stage) this.updateButton.getScene().getWindow();
+            stage.setFullScreen(false);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Éxito");
+            alert.setHeaderText("Productos actualizados");
+            alert.setContentText("Los productos se han actualizado correctamente en el servidor.");
+            alert.showAndWait();
+            stage.setFullScreen(true);
+        } catch (Exception e) {
+            // Mostrar un mensaje de error si ocurre alguna excepción
+            Stage stage = (Stage) this.updateButton.getScene().getWindow();
+            stage.setFullScreen(false);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al actualizar productos");
+            alert.setContentText("Ha ocurrido un error al actualizar los productos en el servidor.");
+            alert.showAndWait();
+            stage.setFullScreen(true);
+            e.printStackTrace();
+
+        }
     }
 }
