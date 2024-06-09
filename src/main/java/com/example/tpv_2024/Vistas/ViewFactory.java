@@ -1,6 +1,7 @@
 package com.example.tpv_2024.Vistas;
 
 import com.example.tpv_2024.Controladores.Cliente.ClientControlador;
+import com.example.tpv_2024.Controladores.Cliente.ClientesControlador;
 import com.example.tpv_2024.Controladores.Cliente.EmpleadosControlador;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -52,7 +53,12 @@ public class ViewFactory {
     public VBox getClientesView(){
         if(clientesView == null) {
             try {
-                clientesView = new FXMLLoader(getClass().getResource("/FXML/Client/Cuentas.fxml")).load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Client/Cuentas.fxml"));
+                clientesView = loader.load();
+
+                ClientesControlador controlador = loader.getController();
+                controlador.cargarDatosIniciales();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

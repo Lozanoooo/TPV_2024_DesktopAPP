@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
@@ -74,6 +75,9 @@ public class ClientesControlador implements Initializable {
 
         // Añadir listener para el campo de búsqueda por ID
         TF_buscarPorID.setOnAction(event -> buscarCliente(TF_buscarPorID.getText()));
+
+        // Cargar datos iniciales
+        cargarDatosIniciales();
     }
 
     private void buscarCliente(String idCliente) {
@@ -104,6 +108,17 @@ public class ClientesControlador implements Initializable {
                     alert.showAndWait();
                     stage.setFullScreen(true);
                 });
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void cargarDatosIniciales() {
+        CompletableFuture.runAsync(() -> {
+            try {
+                List<Cliente> clientesList = ClienteService.obtenerTodosLosClientes();
+                javafx.application.Platform.runLater(() -> clientes.addAll(clientesList));
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });

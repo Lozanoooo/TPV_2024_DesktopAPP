@@ -1,18 +1,27 @@
 package com.example.tpv_2024.Servicio;
 
 import com.example.tpv_2024.Modelos.Cliente;
+import com.example.tpv_2024.util.HttpUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.ObservableList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ClienteService {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmpleadoService.class);
+    private static final String BASE_URL = "http://localhost:8080/empleados";
 
     public static Cliente buscarCliente(String idCliente) throws Exception {
         System.out.println("Buscando cliente con ID: " + idCliente);
@@ -133,6 +142,19 @@ public class ClienteService {
                 System.out.println("Error al procesar el cliente: " + idCliente);
                 e.printStackTrace();
             }
+        }
+    }
+
+    public static List<Cliente> obtenerTodosLosClientes() throws IOException {
+        String url = BASE_URL;
+        try {
+            String response = HttpUtil.sendGetRequest(url);
+            ObjectMapper mapper = new ObjectMapper();
+            logger.debug("Response: {}", response);
+            return Arrays.asList(mapper.readValue(response, Cliente[].class));
+        } catch (IOException e) {
+            logger.error("Error al obtener los clientes: {}", e.getMessage());
+            throw new RuntimeException("Error al obtener los clientes: " + e.getMessage(), e);
         }
     }
 }
