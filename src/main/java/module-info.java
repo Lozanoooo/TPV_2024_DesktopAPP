@@ -8,6 +8,8 @@ module com.example.tpv_2024 {
     requires com.fasterxml.jackson.databind;
     requires org.slf4j;
     requires java.desktop;
+    requires org.apache.httpcomponents.httpcore;
+    requires org.apache.httpcomponents.httpclient;
 
     opens com.example.tpv_2024 to javafx.fxml;
     opens com.example.tpv_2024.Controladores.Cliente to javafx.fxml;

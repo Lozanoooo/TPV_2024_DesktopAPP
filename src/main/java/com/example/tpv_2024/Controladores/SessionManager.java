@@ -26,4 +26,13 @@ public class SessionManager {
         }
         return null;
     }
+    public int getIDEmpleadoLogueado() {
+        if (this.empleadoLogueado != null) {
+            return this.empleadoLogueado.getIdEmpleado();
+        }
+        return 1;
+    }
+
+
+
 }

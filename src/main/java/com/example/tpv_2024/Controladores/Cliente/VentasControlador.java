@@ -1,7 +1,9 @@
 package com.example.tpv_2024.Controladores.Cliente;
 
+import com.example.tpv_2024.Controladores.SessionManager;
 import com.example.tpv_2024.Servicio.ProductoService;
 import com.example.tpv_2024.Modelos.Ventas;
+import com.example.tpv_2024.Servicio.VentasService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +17,9 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.UnaryOperator;
@@ -203,11 +208,46 @@ public class VentasControlador implements Initializable {
         updateCantidad();
     }
 //TODO
-    public void onPagar(ActionEvent event) {
-        System.out.println("Pagando");
-        // Guarda el registro de la venta en la base de datos del servidor
-        // Se guardará los códigos de barras de los productos, el empleado que realizó la venta y el id del cliente si es que lo hay
+public void onPagar(ActionEvent event) {
+    System.out.println("Pagando");
 
+    // Obtener el ID del empleado (puedes obtenerlo de alguna variable o sesión)
+    int idEmpleado = SessionManager.getInstance().getIDEmpleadoLogueado();
+    String idEmpleadoString = String.valueOf(idEmpleado);
+
+    // Obtener el ID del cliente si el checkbox está seleccionado
+    String idCliente = "";
+    if (chBox_socio.isSelected()) {
+        idCliente = TF_ID_Cliente.getText();
+    }
+
+    // Crear una lista para almacenar los códigos de barras de los productos
+    List<String> codigosBarras = new ArrayList<>();
+
+    // Obtener los códigos de barras y cantidades de los productos en la tabla
+    for (Ventas producto : productos) {
+        String codigoBarra = producto.getCodigo();
+        int cantidad = producto.getCantidad();
+
+        // Agregar el código de barras a la lista tantas veces como la cantidad
+        for (int i = 0; i < cantidad; i++) {
+            codigosBarras.add(codigoBarra);
+        }
+    }
+
+    // Llamar al método registrarVenta del servicio VentasService con la lista de códigos de barras
+    VentasService.registrarVenta(idEmpleadoString, idCliente, codigosBarras);
+
+    // Limpiar la tabla y los campos después de registrar la venta
+    productos.clear();
+    updateTotal();
+    updateCantidad();
+    TF_ID_Cliente.clear();
+    chBox_socio.setSelected(false);
+    onSocio();
+    tf_EnEfectivo.clear();
+    l_cambios.setText("€ 0.00");
+    System.out.println("Venta registrada");
 
     }
 
