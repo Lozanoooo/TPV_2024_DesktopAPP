@@ -44,16 +44,16 @@
                   <FontAwesomeIconView glyphName="USER" size="20" />
                </graphic>
             </Button>
-            <Button fx:id="logout_btn" mnemonicParsing="false" styleClass="alt_menu_btn" text="Salir/Logout">
+            <Button fx:id="logout_btn" onAction="#onLogout" mnemonicParsing="false" styleClass="alt_menu_btn" text="Cerrar">
                <graphic>
                   <FontAwesomeIconView glyphName="EXTERNAL_LINK" size="20" />
                </graphic>
             </Button>
          </VBox>
          <VBox prefWidth="130.0" styleClass="report_container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sugerir/Reportar??" />
-            <Label text="Utilizo esto para reportar cualquier error o sugerencia." />
-            <Button fx:id="report_btn" mnemonicParsing="false" text="Report">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sugerir/Reportar" />
+            <Label text="Para reportar cualquier error o sugerencia." />
+            <Button fx:id="report_btn" onAction="#onReport" mnemonicParsing="false" text="Reportar">
                <graphic>
                   <FontAwesomeIconView glyphName="PLUS" />
                </graphic>

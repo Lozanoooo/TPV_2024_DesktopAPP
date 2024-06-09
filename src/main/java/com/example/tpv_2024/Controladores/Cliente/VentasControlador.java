@@ -1,6 +1,6 @@
 package com.example.tpv_2024.Controladores.Cliente;
 
-import com.example.tpv_2024.Modelos.ProductoModelo;
+import com.example.tpv_2024.Servicio.ProductoService;
 import com.example.tpv_2024.Modelos.Ventas;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
@@ -45,6 +46,8 @@ public class VentasControlador implements Initializable {
     @FXML
     public TextField TF_Precio;
     @FXML
+    public TextField TF_ID_Cliente;
+    @FXML
     public Button agregar_btn;
     @FXML
     public Button pagar_btn;
@@ -56,6 +59,8 @@ public class VentasControlador implements Initializable {
     private TextField tf_EnEfectivo;
     @FXML
     private Label l_cambios;
+    @FXML
+    private CheckBox chBox_socio;
 
     public ObservableList<Ventas> productos;
 
@@ -92,6 +97,7 @@ public class VentasControlador implements Initializable {
             } else {
                 return null;
             }
+
         };
         TextFormatter<Double> textFormatter = new TextFormatter<>(new DoubleStringConverter(), null, filter);
         tf_EnEfectivo.setTextFormatter(textFormatter);
@@ -114,7 +120,7 @@ public class VentasControlador implements Initializable {
             updateCantidad();
         });
 
-// Agregar listener para la columna de precio
+        // Agregar listener para la columna de precio
         productPriceColumn.setOnEditCommit(event -> {
             Ventas producto = event.getRowValue();
             double nuevoPrecio = event.getNewValue();
@@ -125,6 +131,7 @@ public class VentasControlador implements Initializable {
             updateTotal();
         });
 
+        onSocio();
     }
 
     private void calcularCambios(ActionEvent actionEvent) {
@@ -134,11 +141,15 @@ public class VentasControlador implements Initializable {
             double cambios = enEfectivo - total;
             this.l_cambios.setText(String.format("€ %.2f", cambios));
         } catch (NumberFormatException e) {
+            // Salir primero de la pantalla completa
+            Stage stage = (Stage) this.pagar_btn.getScene().getWindow();
+            stage.setFullScreen(false);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error al calcular cambios");
             alert.setContentText("Por favor, ingrese una cantidad válida");
             alert.showAndWait();
+            stage.setFullScreen(true);
         }
     }
 
@@ -175,11 +186,14 @@ public class VentasControlador implements Initializable {
             updateCantidad();
             System.out.println("Producto agregado");
         } catch (NumberFormatException e) {
+            Stage stage = (Stage) this.pagar_btn.getScene().getWindow();
+            stage.setFullScreen(false);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error al agregar producto");
             alert.setContentText("Por favor, ingrese los datos correctamente");
             alert.showAndWait();
+            stage.setFullScreen(true);
         }
     }
     public void onBorrar(ActionEvent event) {
@@ -188,9 +202,12 @@ public class VentasControlador implements Initializable {
         updateTotal();
         updateCantidad();
     }
-
+//TODO
     public void onPagar(ActionEvent event) {
         System.out.println("Pagando");
+        // Guarda el registro de la venta en la base de datos del servidor
+        // Se guardará los códigos de barras de los productos, el empleado que realizó la venta y el id del cliente si es que lo hay
+
 
     }
 
@@ -210,11 +227,16 @@ public class VentasControlador implements Initializable {
         this.totalQuantityLabel.setText(String.valueOf(cantidad));
     }
 
-    private void metodoPago(ActionEvent event) {
+    @FXML
+    private void metodoPagoVisa(ActionEvent event) {
+        if (this.rbt_visa.isSelected()) {
+            tf_EnEfectivo.setDisable(true);
+        }
+    }
+    @FXML
+    private void metodoPagoEfectivo(ActionEvent event) {
         if (this.rbt_efectivo.isSelected()) {
-
-        } else if (this.rbt_visa.isSelected()) {
-
+            tf_EnEfectivo.setDisable(false);
         }
     }
 
@@ -222,7 +244,7 @@ public class VentasControlador implements Initializable {
         // Crear una tarea asíncrona para llamar al servidor
         CompletableFuture.runAsync(() -> {
             try {
-                Ventas producto = ProductoModelo.verificarProducto(codigo);
+                Ventas producto = ProductoService.verificarProducto(codigo);
                 // Actualizar UI en el hilo de JavaFX
                 javafx.application.Platform.runLater(() -> {
                     TF_Nombre.setText(producto.getNombre());
@@ -236,11 +258,15 @@ public class VentasControlador implements Initializable {
             } catch (Exception e) {
                 // Manejar cualquier excepción
                 javafx.application.Platform.runLater(() -> {
+                    // Salir primero de la pantalla completa
+                    Stage stage = (Stage) this.TF_Cod_Barra.getScene().getWindow();
+                    stage.setFullScreen(false);
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText("Producto no encontrado");
                     alert.setContentText("El producto con el código de barra " + codigo + " no se encontró en la base de datos.");
                     alert.showAndWait();
+                    stage.setFullScreen(true);
                 });
                 e.printStackTrace();
             }
@@ -254,6 +280,15 @@ public class VentasControlador implements Initializable {
             }
         }
         return null;
+    }
+
+    // Si el checkbox está seleccionado, se habilita el campo de texto para el número de socio en caso contrario no
+    public void onSocio() {
+        if (chBox_socio.isSelected()) {
+            TF_ID_Cliente.setDisable(false);
+        } else {
+            TF_ID_Cliente.setDisable(true);
+        }
     }
 
 }
